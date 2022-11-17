@@ -57,17 +57,20 @@ class VideoStreamPiCam(object):
         
         # Initiates a picamera object
         self.camera = picamera.PiCamera(resolution=(WIDTH, HEIGHT), framerate=FRAMERATE, **kwargs)
-        logger.info('PiCamera specs: resolution={} framerate={}'.format(self.camera.resolution, self.camera.framerate))
-        
+        logger.info(
+            f'PiCamera specs: resolution={self.camera.resolution} framerate={self.camera.framerate}'
+        )
+
+
         self.stream = picamera.array.PiRGBArray(self.camera)
-        
+
         # Starts preview and prepares to capture images continuously to stream
         self.camera.start_preview()
         logger.info('PiCamera created.')
-        
+
         self.cap = self.camera.capture_continuous(self.stream, format='bgr', use_video_port=True)
         logger.info('Streamer created.')
-        
+
         # Makes sure video streaming is thread-safe
         self.lock = mp.Lock()
         
@@ -127,8 +130,11 @@ class VideoStreamCustom(object):
     def __init__(self, **kwargs):
         # Initiates a picamera object
         self.camera = picamera.PiCamera(resolution=(WIDTH, HEIGHT), framerate=FRAMERATE, **kwargs)
-        logger.info('PiCamera specs: resolution={} framerate={}'.format(self.camera.resolution, self.camera.framerate))
-        
+        logger.info(
+            f'PiCamera specs: resolution={self.camera.resolution} framerate={self.camera.framerate}'
+        )
+
+
         self.stream = StreamingOutput()
         self.camera.start_recording(self.stream, format='mjpeg')
         self.camera.wait_recording(2)

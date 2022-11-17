@@ -76,5 +76,4 @@ class TFLiteInterpreter(object):
         x = self.pre_process(x)
         self.interpreter.set_tensor(self.INPUT_DETAILS[0]['index'], x.astype(self.INPUT_DTYPE))
         self.interpreter.invoke()
-        preds = self.interpreter.get_tensor(self.OUTPUT_DETAILS[0]['index'])[0]
-        return preds
+        return self.interpreter.get_tensor(self.OUTPUT_DETAILS[0]['index'])[0]
